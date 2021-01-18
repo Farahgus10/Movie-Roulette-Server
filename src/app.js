@@ -6,7 +6,7 @@ const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
 const { v4: uuid } = require('uuid')
 const winston = require('winston')
-const movieRouter = require('./Movies/movie-router')
+const MovieRouter = require('./Movies/movie-router')
 
 const app = express();
 
@@ -21,23 +21,18 @@ const logger = winston.createLogger({
     ]
   });
 
-// if(NODE_ENV !== 'production') {
-//     logger.add(new winston.transports.Console({
-//         format: winston.format.simple()
-//     }));
-// }
+if(NODE_ENV !== 'production') {
+    logger.add(new winston.transports.Console({
+        format: winston.format.simple()
+    }));
+}
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// app.get('/', (req, res) => {
-//     res.send('hello world!')
-// })
-
-app.use('/', movieRouter)
-app.use('/myMovies', movieRouter)
+app.use('/myMovies', MovieRouter)
 
 app.use(function errorHandler(error, req, res, next) {
     let response;

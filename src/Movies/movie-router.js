@@ -11,7 +11,7 @@ const movieRouter = express.Router();
 // })
 
 movieRouter
-    .route('/myMovies')
+    .route('/')
     .get((req, res, next) => {
         const db = req.app.get('db')
 
@@ -45,18 +45,18 @@ movieRouter
         console.log(newMovie)
     })
 
-    // .post(jsonParser, (req, res, next) => {
-    //     const db = req.app.get('db')
-    //     const { movie_id, movie_title, movie_overview, genre_id, release_date } = req.body
-    //     const newMovie = { movie_id, movie_title, movie_overview, genre_id, release_date }
+    .post(jsonParser, (req, res, next) => {
+        const db = req.app.get('db')
+        const { movie_id, movie_title, movie_overview, genre_id, release_date } = req.body
+        const newMovie = { movie_id, movie_title, movie_overview, genre_id, release_date }
 
-    //     // todo: error checking 
+        // todo: error checking 
 
-    //     MovieService.insertMovie(db, newMovie)
-    //         .then(movie => {
-    //             res.status(201).location(path.posix.join(req.originalUrl, `/${movie.id}`)).json(serializeMovie(movie))
-    //         })
-    //         .catch(next)
-    // })
+        MovieService.insertMovie(db, newMovie)
+            .then(movie => {
+                res.status(201).location(path.posix.join(req.originalUrl, `/${movie.id}`)).json(serializeMovie(movie))
+            })
+            .catch(next)
+    })
 
     module.exports = movieRouter
