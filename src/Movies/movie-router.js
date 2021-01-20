@@ -59,4 +59,14 @@ movieRouter
             .catch(next)
     })
 
+
+movieRouter
+    .route('/:movie_id')
+    .delete((req, res, next) => {
+        const db = req.app.get('db')
+        
+        MovieService.deleteMovie(db, req.params.movie_id)
+            .then(res.status(203).send('Deleted'))
+    })
+
     module.exports = movieRouter
