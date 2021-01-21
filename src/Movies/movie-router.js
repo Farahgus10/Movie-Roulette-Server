@@ -21,17 +21,11 @@ movieRouter
                 res.status(200).json(movie)
             })
             .catch(next)
-
-        MovieService.getDislikedMovies(db)
-            .then(movie => {
-                res.status(200).json(movie)
-            })
-            .catch(next)
     })
     .post((req, res, next) => {
         const db = req.app.get('db')
-        const { id, title, overview, genre_id, release_date } = req.body
-        const newMovie = { id, title, overview, genre_id, release_date }
+        const { id, title, overview, genre_id, release_date, disliked } = req.body
+        const newMovie = { id, title, overview, genre_id, release_date, disliked }
 
         //Error checking:
         if(!id) {
@@ -42,12 +36,6 @@ movieRouter
         }
 
         MovieService.insertMovie(db, newMovie)
-        .then(movie => {
-            res.status(201).location(`/myMovies/${movie.id}`).json(movie)
-        })
-        .catch(next)
-
-        MovieService.insertDislikedMovie(db, newMovie)
         .then(movie => {
             res.status(201).location(`/myMovies/${movie.id}`).json(movie)
         })
