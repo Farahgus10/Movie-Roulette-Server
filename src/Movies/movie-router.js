@@ -24,8 +24,8 @@ movieRouter
     })
     .post((req, res, next) => {
         const db = req.app.get('db')
-        const { id, title, overview, genre_id, release_date, disliked } = req.body
-        const newMovie = { id, title, overview, genre_id, release_date, disliked }
+        const { id, title, overview, genre_id, release_date, disliked, user_id } = req.body
+        const newMovie = { id, title, overview, genre_id, release_date, disliked, user_id }
 
         //Error checking:
         if(!id) {
