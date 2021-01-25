@@ -10,4 +10,10 @@ VALUES (
     -- 'password123',
     '$2a$04$Obb6yu1OjTsOqzjmJy8Xwe0oZ.7/wHrBAvaVA5qknnhXf6egk1fA.',
     'adminemail@gmail.com'
+),
+(
+    'Farah Gustafson',
+    -- 'password',
+    '$2a$12$F49NzienjA80wY.wbVZO2.gxG9WEGmBXKiJPGffpDvnIVXDXMBP0e',
+    'farah.gus@gmail.com'
 )
