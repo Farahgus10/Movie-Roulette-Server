@@ -1,7 +1,7 @@
-INSERT INTO "your_movie_list" ("title", "overview", "genre_id", "release_date", "disliked")
+INSERT INTO "your_movie_list" ("title", "overview", "genre_id", "release_date", "disliked", "user_id")
 VALUES
 (
-    'Into the Wild', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque', '4', '02-02-2002', false
+    'Into the Wild', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus consequuntur deserunt commodi, nobis qui inventore corrupti iusto aliquid debitis unde non. Adipisci, pariatur. Molestiae, libero esse hic adipisci autem neque', '4', '02-02-2002', false, 1
 );
 
 INSERT INTO "users" ("full_name", "password", "email")

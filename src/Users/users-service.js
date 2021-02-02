@@ -36,6 +36,9 @@ const UsersService = {
             date_created: new Date(user.date_created)
         }
     },
+    getAllUsers(db) {
+        return db.select('*').from('users')
+    }
 }
 
 module.exports = UsersService

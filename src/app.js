@@ -9,6 +9,7 @@ const winston = require('winston')
 const MovieRouter = require('./Movies/movie-router')
 const authRouter = require('./Auth/auth-router')
 const usersRouter = require('./Users/users-router')
+const profileRouter = require('./Profile/profile-router')
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(express.json());
 app.use('/myMovies', MovieRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/profile', profileRouter);
 
 app.use(function errorHandler(error, req, res, next) {
     let response;

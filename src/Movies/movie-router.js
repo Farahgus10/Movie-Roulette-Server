@@ -1,5 +1,6 @@
 const express = require('express');
 const MovieService = require('./movie-service');
+const { requireAuth } = require('../Middleware/jwt-auth')
 const jsonParser = express.json;
 const path = require('path');
 const { serialize } = require('v8');
@@ -12,6 +13,7 @@ const movieRouter = express.Router();
 
 movieRouter
     .route('/')
+    .all(requireAuth)
     .get((req, res, next) => {
         const db = req.app.get('db')
 
@@ -22,7 +24,7 @@ movieRouter
             })
             .catch(next)
     })
-    .post((req, res, next) => {
+    .post(requireAuth, (req, res, next) => {
         const db = req.app.get('db')
         const { id, title, overview, genre_id, release_date, disliked, user_id } = req.body
         const newMovie = { id, title, overview, genre_id, release_date, disliked, user_id }
@@ -60,6 +62,7 @@ movieRouter
 
 movieRouter
     .route('/:movie_id')
+    .all(requireAuth)
     .delete((req, res, next) => {
         const db = req.app.get('db')
         
