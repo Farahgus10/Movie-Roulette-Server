@@ -63,7 +63,7 @@ ProfileRoute
     .get((req, res, next) => {
         res.json(ProfileService.serializeUserProfile(res.profile))
     })
-    .delete(requireAuth, (res, res, next) => {
+    .delete(requireAuth, (req, res, next) => {
         const db = req.app.get('db')
         ProfileService.deleteUserProfile(db, req,params.user_id)
         .then(numRowsAffected => {

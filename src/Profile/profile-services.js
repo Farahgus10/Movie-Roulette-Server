@@ -1,4 +1,5 @@
 const xss = require('xss')
+
 const ProfileServices = {
     insertUserProfile(db, newProfile) {
         return db.insert(newProfile).into('user_profile').returning('*')

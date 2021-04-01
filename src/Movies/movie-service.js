@@ -3,9 +3,12 @@ const MovieService = {
         return db
             .select('*').from('your_movie_list')
     },
-    insertMovie(db, newMovie) {
+    insertMovie(db, newMovie, id) {
         return db
-            .insert(newMovie).into('your_movie_list').returning('*').where(numRows => {
+            // .insert(newMovie).into('your_movie_list').returning('*').where(numRows => {
+            //     return numRows[0]
+            // })
+            .insert(newMovie).into('your_movie_list').returning('*').where('user_id', id).where(numRows => {
                 return numRows[0]
             })
     },
