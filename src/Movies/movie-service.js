@@ -1,7 +1,7 @@
 const MovieService = {
-    getMovies(db) {
+    getMovies(db, id) {
         return db
-            .select('*').from('your_movie_list')
+            .select('*').from('your_movie_list').where('user_id', id)
     },
     insertMovie(db, newMovie, id) {
         return db

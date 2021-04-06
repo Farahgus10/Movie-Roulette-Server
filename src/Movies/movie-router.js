@@ -16,8 +16,9 @@ movieRouter
     .all(requireAuth)
     .get((req, res, next) => {
         const db = req.app.get('db')
+        const user_id = req.params.user_id;
 
-        MovieService.getMovies(db)
+        MovieService.getMovies(db, String(req.user.id))
             .then(movie => {
                 // res.status(200).json(movie.map(serializeMovie))
                 res.status(200).json(movie)
@@ -45,20 +46,6 @@ movieRouter
 
         console.log(newMovie)
     })
-
-    // .post(jsonParser, (req, res, next) => {
-    //     const db = req.app.get('db')
-    //     const { movie_id, movie_title, movie_overview, genre_id, release_date } = req.body
-    //     const newMovie = { movie_id, movie_title, movie_overview, genre_id, release_date }
-
-    //     // todo: error checking 
-
-    //     MovieService.insertMovie(db, newMovie)
-    //         .then(movie => {
-    //             res.status(201).location(path.posix.join(req.originalUrl, `/${movie.id}`)).json(serializeMovie(movie))
-    //         })
-    //         .catch(next)
-    // })
 
 movieRouter
     .route('/:movie_id')
