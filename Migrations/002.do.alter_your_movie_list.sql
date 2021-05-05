@@ -5,3 +5,7 @@ ALTER COLUMN
 ALTER TABLE your_movie_list
 ADD COLUMN
     disliked BOOLEAN NOT NULL;
+
+ALTER TABLE your_movie_list
+ADD COLUMN
+    watched BOOLEAN NOT NULL;

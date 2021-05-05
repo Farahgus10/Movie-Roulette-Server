@@ -1,1 +1,0 @@
-ALTER TABLE your_movie_list DROP COLUMN IF EXISTS id;
