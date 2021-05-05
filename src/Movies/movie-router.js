@@ -50,11 +50,30 @@ movieRouter
 movieRouter
     .route('/:movie_id')
     .all(requireAuth)
-    .delete((req, res, next) => {
+    
+    .delete(requireAuth, (req, res, next) => {
         const db = req.app.get('db')
         
         MovieService.deleteMovie(db, req.params.movie_id)
-            .then(res.status(203).send('Deleted'))
+        .then(numRowsAffected => {
+            res.status(204).end()
+        })
+        .catch(next)
+    })
+    .patch(requireAuth, jsonParser, (req, res, next) => {
+        const db = req.app.get('db')
+        const { watched } = req.body;
+        const updatedMovies = { watched };
+
+        const numVal = Object.values(updatedMovies).filter(Boolean).length
+        if(numVal === 0) {
+            return res.status(400).json({ error: `Must not be blank`})
+        }
+        MovieService.updateMovieList(db, req.params.movie_id, req.params.user_id, updatedMovies)
+        .then(movie => {
+            res.status(200).json(movie[0])
+        }).catch(next)
+
     })
 
     module.exports = movieRouter
