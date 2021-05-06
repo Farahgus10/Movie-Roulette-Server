@@ -1,4 +1,5 @@
 const express = require('express')
+const xss = require('xss')
 const path = require('path')
 const { requireAuth } = require('../Middleware/jwt-auth')
 const ProfileService = require('./profile-services')
@@ -44,6 +45,7 @@ ProfileRoute
 
 ProfileRoute
     .route('/:user_id')
+    // .all handles triggers for all methods (GET, DELETE, etc...)
     .all(requireAuth)
     .all((req, res, next) => {
         const db = req.app.get('db')
@@ -52,14 +54,11 @@ ProfileRoute
             if(!profile) {
                 return res.status(404).json({ error: `Profile doesn't exist`})
             }
-            // res.profile = profile
-            res.json({profile: profile})
+            res.profile = profile;
             next()
-            // return profile
         })
         .catch(next)
     })
-    .get(requireAuth)
     .get((req, res, next) => {
         res.json(ProfileService.serializeUserProfile(res.profile))
     })

@@ -46,51 +46,45 @@ movieRouter
     })
 
 movieRouter
-    .route('/:movie_id')
+    .route('/:movie_id/:user_id')
     .all(requireAuth)
+    // .all handles triggers for all methods (GET, DELETE, etc...)
     .all((req, res, next) => {
         const db = req.app.get('db')
-        MovieService.getById(db, req.params.movie_id)
+        MovieService.getById(db, req.params.movie_id, req.params.user_id)
         .then(movie => {
             if(!movie) { // this runs fine
                 return res.status(404).json({ error: `Movie doesn't exist`})
             }
-            console.log('line 61: ', movie)
-            // res.movie = movie
-
             res.json({movie : movie});
-            console.log(typeof movie)
             next()
-           // return movie;
         })
         .catch(next)
     })
-    .delete(requireAuth, (req, res, next) => {
-        const db = req.app.get('db')
+    // .delete(requireAuth, (req, res, next) => {
+    //     const db = req.app.get('db')
         
-        MovieService.deleteMovie(db, req.params.movie_id)
-        .then(numRowsAffected => {
-            res.status(204).end()
-        })
-        .catch(next)
-    })
-
-    .patch(requireAuth, jsonParser, (req, res, next) => {
+    //     MovieService.deleteMovie(db, req.params.movie_id)
+    //     .then(numRowsAffected => {
+    //         res.status(204).end()
+    //     })
+    //     .catch(next)
+    // })
+    .patch(jsonParser, (req, res, next) => {
         const db = req.app.get('db')
         const { watched } = req.body
         const updatedMovie = { watched }
 
+        // this doesn't run
         const numVal = Object.values(updatedMovie).filter(Boolean).length
-        // console.log(numVal)
         if(numVal === 0) {
             return res.status(400).json({ error: `Must not be blank`})
         }
 
-        MovieService.updateMovie(db, req.params.movie_id, updatedMovie)
+        MovieService.updateMovie(db, req.params.movie_id, req.params.user_id, updatedMovie)
             .then(movie => {
-                // console.log(updatedMovie)
+                console.log(movie) // nothing logs 
                 res.status(200).json(movie[0])
-                // console.log(movie)
             })
             .catch(next)
     })
