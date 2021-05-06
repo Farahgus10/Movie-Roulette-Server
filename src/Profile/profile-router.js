@@ -26,7 +26,6 @@ ProfileRoute
     .route('/')
     .post(requireAuth, jsonParser, (req, res, next) => {
         const db = req.app.get('db');
-
         const { profile_picture, genre_like, actor } = req.body;
         const newProfile = { profile_picture, genre_like, actor }
         newProfile.user_id = req.user.id
@@ -53,9 +52,10 @@ ProfileRoute
             if(!profile) {
                 return res.status(404).json({ error: `Profile doesn't exist`})
             }
-            res.profile = profile
+            // res.profile = profile
+            res.json({profile: profile})
             next()
-            return profile
+            // return profile
         })
         .catch(next)
     })

@@ -3,6 +3,15 @@ const MovieService = {
         return db
             .select('*').from('your_movie_list').where('user_id', id)
     },
+    getById(db, id) {
+        return db.from('your_movie_list').select(
+            'your_movie_list.id',
+            'your_movie_list.title',
+            'your_movie_list.watched',
+            'your_movie_list.user_id',
+        )
+        .where('your_movie_list.id', id).first()
+    },
     insertMovie(db, newMovie, id) {
         return db
             // .insert(newMovie).into('your_movie_list').returning('*').where(numRows => {
@@ -15,8 +24,9 @@ const MovieService = {
     deleteMovie(db, movie_id) {
         return db('your_movie_list').where('id', movie_id).delete()
     },
-    updateMovieList(db, movie_id, user_id, newMovie) {
-        return db('your_movie_list').where('id', movie_id).where('user_id', user_id).update(newMovie).returning('*')
+    updateMovie(db, movie_id, newMovie) {
+        return db('your_movie_list').where('id', movie_id).update(newMovie).returning('*')
+        //.where('user_id', user_id).
     }
 }
 
