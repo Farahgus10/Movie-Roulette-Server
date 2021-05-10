@@ -3,9 +3,10 @@ const path = require('path');
 const { requireAuth } = require('../Middleware/jwt-auth')
 const MovieService = require('./movie-service');
 const { serialize } = require('v8');
+const app = require('../app');
 
 const movieRouter = express.Router();
-const jsonParser = express.json;
+const jsonParser = express.json();
 
 // const serializeMovie = movie => ({
 //     id: movie.id,
@@ -47,44 +48,39 @@ movieRouter
 
 movieRouter
     .route('/:movie_id/:user_id')
-    .all(requireAuth)
     // .all handles triggers for all methods (GET, DELETE, etc...)
-    .all((req, res, next) => {
+    .all(requireAuth)
+    .get((req, res, next) => {
         const db = req.app.get('db')
         MovieService.getById(db, req.params.movie_id, req.params.user_id)
         .then(movie => {
             if(!movie) { // this runs fine
                 return res.status(404).json({ error: `Movie doesn't exist`})
             }
-            res.json({movie : movie});
+            // res.json({movie : movie});
+            res.movie = movie;
             next()
+            return movie;
         })
         .catch(next)
     })
-    // .delete(requireAuth, (req, res, next) => {
-    //     const db = req.app.get('db')
-        
-    //     MovieService.deleteMovie(db, req.params.movie_id)
-    //     .then(numRowsAffected => {
-    //         res.status(204).end()
-    //     })
-    //     .catch(next)
+    // .get(requireAuth)
+    // .get((req, res, next) => {
+    //     res.json(res.movie)
     // })
-    .patch(jsonParser, (req, res, next) => {
-        const db = req.app.get('db')
-        const { watched } = req.body
-        const updatedMovie = { watched }
+    .patch(requireAuth, jsonParser, (req, res, next) => {
+        const { watched } = req.body;
+        const updatedMovie = { watched };
 
-        // this doesn't run
-        const numVal = Object.values(updatedMovie).filter(Boolean).length
-        if(numVal === 0) {
-            return res.status(400).json({ error: `Must not be blank`})
+        const numValues = Object.values(updatedMovie).filter(Boolean).length
+        if (numValues === 0) {
+             return res.status(400).json({ error: { message: 'Must not be blank '}})
         }
+       
 
-        MovieService.updateMovie(db, req.params.movie_id, req.params.user_id, updatedMovie)
+        MovieService.updateMovie(req.app.get('db'), req.params.movie_id, req.params.user_id, updatedMovie)
             .then(movie => {
-                console.log(movie) // nothing logs 
-                res.status(200).json(movie[0])
+                res.status(200).json(updatedMovie)
             })
             .catch(next)
     })

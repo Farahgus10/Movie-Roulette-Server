@@ -70,7 +70,6 @@ ProfileRoute
         })
         .catch(next)
     })
-
     .patch(requireAuth, jsonParser, (req, res, next) => {
         const db = req.app.get('db')
         const { profile_picture, genre_like, actor } = req.body

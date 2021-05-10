@@ -24,7 +24,7 @@ const MovieService = {
     deleteMovie(db, movie_id) {
         return db('your_movie_list').where('id', movie_id).delete()
     },
-    updateMovie(db, movie_id, newMovie) {
+    updateMovie(db, movie_id, user_id, newMovie) {
         return db('your_movie_list').where('id', movie_id).where('user_id', user_id).update(newMovie).returning('*')
         //.where('user_id', user_id).
     }
