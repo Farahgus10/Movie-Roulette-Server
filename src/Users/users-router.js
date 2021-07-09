@@ -1,5 +1,6 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
+const { hasUserName } = require('./users-service');
 const UsersService = require('./users-service')
 
 const usersRouter = express.Router();
@@ -27,6 +28,15 @@ usersRouter
         if (passwordError)
             return res.status(400).json({
                 error: passwordError
+            })
+
+        UsersService.hasUserName(
+            req.app.get('db'),
+            user_name
+        )
+            .then(hasUserName => {
+                if(hasUserName)
+                    return res.status(400).json({ error: 'That user name is already taken.' })
             })
 
         UsersService.hasEmail(

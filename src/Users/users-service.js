@@ -22,6 +22,9 @@ const UsersService = {
     hasEmail(db, email) {
         return db('users').where({ email }).first().then(user => !!user)
     },
+    hasUserName(db, user_name) {
+        return db('users').where({ user_name }).first().then(user => !!user)
+    },
     insertUser(db, newUser) {
         return db.insert(newUser).into('users').returning('*').then(([user]) => user)
     },
