@@ -1,6 +1,7 @@
 module.exports = {
     PORT: process.env.PORT || 8000,
     NODE_ENV: process.env.NODE_ENV || "development",
-    DB_URL: process.env.DB_URL || 'postgresql://movie_roulette_user@localhost/movie_roulette',
+    // DB_URL: process.env.DB_URL || 'postgresql://movie_roulette_user@localhost/movie_roulette',
+    DATABASE_URL: process.env.DATABASE_URL || 'postgresql://movie_roulette_user@localhost/movie_roulette',
     JWT_SECRET: process.env.JWT_SECRET || 'change-this-secret',
 }
