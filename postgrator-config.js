@@ -7,5 +7,7 @@ module.exports = {
     // "host": process.env.MIGRATION_DB_HOST,
     // "database":  process.env.MIGRATION_DB_NAME,
     // "username": process.env.MIGRATION_DB_USER,
-    "ssl": true
+    "ssl": { 
+      rejectUnauthorized: false 
+    } 
   }
