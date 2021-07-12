@@ -34,7 +34,7 @@ app.use(morgan(morganOption));
 app.use(cors({
     origin: CLIENT_ORIGIN
 }));
-app.use(helmet())
+app.use(helmet());git 
 
 app.use(express.json());
 
