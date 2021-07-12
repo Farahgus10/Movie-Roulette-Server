@@ -31,10 +31,8 @@ if(NODE_ENV !== 'production') {
 }
 
 app.use(morgan(morganOption));
-app.use(cors({
-    origin: CLIENT_ORIGIN
-}));
-app.use(helmet());git 
+app.use(cors());
+app.use(helmet());
 
 app.use(express.json());
 
