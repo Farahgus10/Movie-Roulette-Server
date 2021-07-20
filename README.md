@@ -23,7 +23,7 @@ MIGRATION_DB_PORT=5432
 MIGRATION_DB_NAME=rendezvous
 MIGRATION_DB_USER=(the username for your new database)
 MIGRATION_DB_PASS=(password for your new database)
-DB_URL="postgresql://(user):(password)@localhost/rendezvous"
+DB_URL="postgresql://(user):(password)@localhost/movie_roulette_user"
 TEST_DB_URL="postgresql://(user):(password)@localhost/rendezvous-test"
 JWT_SECRET="(whatever you want here)"
 ```
