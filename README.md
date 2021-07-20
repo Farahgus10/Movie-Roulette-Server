@@ -20,15 +20,14 @@ PORT=8000
 TZ='UTC'
 MIGRATION_DB_HOST=127.0.0.1
 MIGRATION_DB_PORT=5432
-MIGRATION_DB_NAME=rendezvous
+MIGRATION_DB_NAME=movie_roulette
 MIGRATION_DB_USER=(the username for your new database)
 MIGRATION_DB_PASS=(password for your new database)
 DB_URL="postgresql://(user):(password)@localhost/movie_roulette_user"
-TEST_DB_URL="postgresql://(user):(password)@localhost/rendezvous-test"
 JWT_SECRET="(whatever you want here)"
 ```
 
-Run npm run migrate to configure the database and npm run migrate --NODE_ENV=test to set up the test database. In the config.js file on the client side, change the API_ENDPOINT to point to your local server. It by default is http://localhost:3000. You are good to go at this point and simply need to run npm start for the client and to start the nodemon, it's npm run dev.
+Run npm run migrate to configure the database. In the config.js file on the client side, change the API_ENDPOINT to point to your local server. It by default is http://localhost:3000. You are good to go at this point and simply need to run npm start for the client and to start the nodemon, it's npm run dev.
 
 
 ### Scripts
